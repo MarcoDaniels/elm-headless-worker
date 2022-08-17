@@ -1,5 +1,5 @@
-const {Elm} = require('./dist/main')
-const app = Elm.Main.init()
+const {Elm} = require('../dist/simple')
+const app = Elm.Simple.init()
 
 // get only one argument
 const input = process.argv[2]

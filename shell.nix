@@ -7,8 +7,8 @@ let
   }) { };
 
   start = pkgs.writeShellScriptBin "start" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Main.elm --output=dist/main.js
-    ${pkgs.nodejs}/bin/node index.js $1
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Simple.elm --output=dist/simple.js
+    ${pkgs.nodejs}/bin/node src/simple.js $1
   '';
 
 in pkgs.mkShell {
