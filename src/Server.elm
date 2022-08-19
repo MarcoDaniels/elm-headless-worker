@@ -10,8 +10,16 @@ port input : (Decode.Value -> msg) -> Sub msg
 port output : Encode.Value -> Cmd msg
 
 
+type alias Input =
+    { url : String, method : String }
+
+
+type alias Output =
+    { statusCode : Int, body : String }
+
+
 type Msg
-    = Incoming (Result Error String)
+    = Incoming (Result Error Input)
 
 
 main : Program () () Msg
@@ -22,13 +30,34 @@ main =
             \msg model ->
                 case msg of
                     Incoming arg ->
+                        let
+                            result : Output -> Cmd msg
+                            result { statusCode, body } =
+                                Encode.object
+                                    [ ( "statusCode", Encode.int statusCode ), ( "body", Encode.string body ) ]
+                                    |> output
+                        in
                         case arg of
-                            Ok response ->
-                                ( model, response |> Encode.string |> output )
+                            Ok { url, method } ->
+                                case String.split "/" url of
+                                    _ :: [ "" ] ->
+                                        ( model, result { statusCode = 200, body = "<h1>Home page</h1>" } )
+
+                                    _ :: [ "about" ] ->
+                                        ( model, result { statusCode = 200, body = "<h1>About page</h1>" } )
+
+                                    _ ->
+                                        ( model, result { statusCode = 404, body = "<h1>Not found</h1>" } )
 
                             Err err ->
-                                ( model, Decode.errorToString err |> Encode.string |> output )
+                                ( model, result { statusCode = 503, body = Decode.errorToString err } )
         , subscriptions =
             \_ ->
-                Decode.decodeValue Decode.string >> Incoming |> input
+                Decode.decodeValue
+                    (Decode.map2 Input
+                        (Decode.field "url" Decode.string)
+                        (Decode.field "method" Decode.string)
+                    )
+                    >> Incoming
+                    |> input
         }
