@@ -8,7 +8,7 @@ http
         const outputCaller = (elmResponse) => {
             console.log('elm response:', elmResponse)
             res.writeHead(elmResponse.statusCode, {'Content-Type': 'text/html'})
-            res.end(`<h1>${elmResponse.body}</h1>`)
+            res.end(elmResponse.body)
 
             app.ports.output.unsubscribe(outputCaller)
         }
