@@ -6,10 +6,15 @@ let
     sha256 = "1rcyfp6bdfkqy6bmnp1jbhk84rsprks5ynz827dq78164ksxm9ir";
   }) { };
 
-  start = pkgs.writeShellScriptBin "start" ''
+  startSimple = pkgs.writeShellScriptBin "startSimple" ''
     ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Simple.elm --output=dist/simple.js
     ${pkgs.nodejs}/bin/node src/simple.js $1
   '';
+
+    startServer = pkgs.writeShellScriptBin "startServer" ''
+      ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Server.elm --output=dist/server.js
+      ${pkgs.nodejs}/bin/node src/server.js
+    '';
 
 in pkgs.mkShell {
   buildInputs = [
@@ -18,6 +23,7 @@ in pkgs.mkShell {
     pkgs.elmPackages.elm-format
     pkgs.nodejs
     # custom scripts
-    start
+    startSimple
+    startServer
   ];
 }
