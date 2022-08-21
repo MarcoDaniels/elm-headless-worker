@@ -7,13 +7,13 @@ let
   }) { };
 
   startSimple = pkgs.writeShellScriptBin "startSimple" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Simple.elm --output=dist/simple.js
-    ${pkgs.nodejs}/bin/node src/simple.js $1
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize node/src/Simple.elm --output=node/dist/simple.js
+    ${pkgs.nodejs}/bin/node node/src/simple.js $1
   '';
 
     startServer = pkgs.writeShellScriptBin "startServer" ''
-      ${pkgs.elmPackages.elm}/bin/elm make --optimize src/Server.elm --output=dist/server.js
-      ${pkgs.nodejs}/bin/node src/server.js
+      ${pkgs.elmPackages.elm}/bin/elm make --optimize node/src/Server.elm --output=node/dist/server.js
+      ${pkgs.nodejs}/bin/node node/src/server.js
     '';
 
 in pkgs.mkShell {

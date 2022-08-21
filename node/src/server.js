@@ -6,7 +6,6 @@ const app = Elm.Server.init()
 http
     .createServer((req, res) => {
         const outputCaller = (elmResponse) => {
-            console.log('elm response:', elmResponse)
             res.writeHead(elmResponse.statusCode, {'Content-Type': 'text/html'})
             res.end(elmResponse.body)
 
