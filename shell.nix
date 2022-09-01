@@ -7,23 +7,23 @@ let
   }) { };
 
   startSimpleNode = pkgs.writeShellScriptBin "startSimpleNode" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize node/src/Simple.elm --output=node/dist/simple.js
-    ${pkgs.nodejs}/bin/node node/src/simple.js $1
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize node/Simple.elm --output=dist/simple.js
+    ${pkgs.nodejs}/bin/node node/simple.js $1
   '';
 
   startNodeServer = pkgs.writeShellScriptBin "startNodeServer" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize node/src/Server.elm --output=node/dist/server.js
-    ${pkgs.nodejs}/bin/node node/src/server.js
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize node/Server.elm --output=dist/server.js
+    ${pkgs.nodejs}/bin/node node/server.js
   '';
 
   startDenoServer = pkgs.writeShellScriptBin "startDenoServer" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize deno/src/DenoServer.elm --output=deno/dist/denoServerElm.js
-    ${pkgs.deno}/bin/deno run --allow-read --allow-env=NODE_DEBUG --allow-net deno/src/denoServer.ts
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize deno/DenoServer.elm --output=dist/denoServerElm.js
+    ${pkgs.deno}/bin/deno run --allow-read --allow-env=NODE_DEBUG --allow-net deno/denoServer.ts
   '';
 
   startBunServer = pkgs.writeShellScriptBin "startBunServer" ''
-    ${pkgs.elmPackages.elm}/bin/elm make --optimize bun/src/BunServer.elm --output=bun/dist/bunServerElm.js
-    ${pkgs.bun}/bin/bun run bun/src/bunServer.js
+    ${pkgs.elmPackages.elm}/bin/elm make --optimize bun/BunServer.elm --output=dist/bunServerElm.js
+    ${pkgs.bun}/bin/bun run bun/bunServer.js
   '';
 
 in pkgs.mkShell {

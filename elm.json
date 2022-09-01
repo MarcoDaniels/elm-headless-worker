@@ -1,9 +1,9 @@
 {
     "type": "application",
     "source-directories": [
-        "bun/src",
-        "deno/src",
-        "node/src"
+        "bun",
+        "deno",
+        "node"
     ],
     "elm-version": "0.19.1",
     "dependencies": {
