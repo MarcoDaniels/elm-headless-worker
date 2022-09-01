@@ -1,6 +1,7 @@
 {
     "type": "application",
     "source-directories": [
+        "bun/src",
         "deno/src",
         "node/src"
     ],
